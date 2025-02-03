@@ -1,9 +1,10 @@
 import random
+import os
 
 def main():
     
     while True: #Loop through the menu
-
+        clearScreen()
         # Display Main Menu
         print(f'''\n
             =========================================================================
@@ -22,6 +23,7 @@ def main():
 
         # Display General Instructions for Hangman 
         if n == "1":
+            clearScreen()
             print(
                 f''' 
                 =========================================================================
@@ -43,13 +45,16 @@ def main():
             a = input("")
 
             if a == "1":
+                clearScreen()
                 print()
                 print(f"{Yellow('GAME START!')}")
                 hangman()
 
             elif a == "2":
+                clearScreen()
                 continue
         elif n == "2":
+            clearScreen()
 
             # Display General Instructions for Guess the Number
 
@@ -75,21 +80,25 @@ def main():
             a = input("")
 
             if a == "1":
+                clearScreen()
                 print()
                 print(f"{Yellow('GAME START!')}")
                 guessTheNumber()
 
             elif a == "2":
+                clearScreen()
                 continue
         
         # Exits the entire program
         elif n == "3":
+            clearScreen()
             print ()
             print(f"{Bold(Yellow('I guess that is goodbye! Thank you for playing!'))}")
             break
 
         # Displays the information about the developers
         elif n == "4":
+            clearScreen()
             aboutTheDevs()
 
 # Functions for font-styling
@@ -111,6 +120,10 @@ def Bold(colorChar):
 def Italic(colorChar): 
     return "\033[03m{}\033[00m".format(colorChar)
 
+# Clear Screen
+def clearScreen(): 
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 # Function for re-trial
 def try_again_option(game):
         print(f'''
@@ -120,6 +133,7 @@ def try_again_option(game):
         ''')
         choice = input("")
         if choice == "1":
+            clearScreen()
             print(
             f'''
 \nStarting a new game...
@@ -130,6 +144,7 @@ def try_again_option(game):
             game()
 
         elif choice == "2":
+            clearScreen()
             return
 
 # Function for Hangman Game
@@ -223,27 +238,32 @@ def hangman():
             
             # Validates if input only has 1 letter
             if len(guess) != 1 or not guess.isalpha():
+                clearScreen()
                 print(f"\n{Red('Invalid input! Please enter a letter.')}")
                 continue
 
             # Checks for duplicate answers
             if guess in guessed_word or guess in incorrect_guesses:
+                clearScreen()
                 print(f"\n{Red('Opps, you already guessed that letter.')}")
                 continue
             
             # Validates if answer is correct
             if guess in word_to_guess:
+                clearScreen()
                 for i in range(len(word_to_guess)):
                     if word_to_guess[i] == guess:
                         guessed_word[i] = guess
                 print(f"\n{Bold(Yellow('Good job!'))} '{guess}' is in the word.")
             else:
+                clearScreen()
                 incorrect_guesses.append(guess)
                 attempts -= 1
                 print(f"\n{Red('Yikes!')} '{guess}' is not in the word.")
 
             # Displays UI if user wins
             if '_' not in guessed_word:
+                clearScreen()
                 print(hangman_visual(incorrect_guesses))
                 print(f"\n{Bold(Yellow('Congrats!'))} You guessed the word '{word_to_guess}'.")
                 return try_again_option(hangman)
@@ -278,18 +298,21 @@ def guessTheNumber():
             else:
                 print(f"\n{Red('Invalid mode. Please enter 1, 2, or 3.')}")
         except ValueError:
-            print(f"\n {Red('Invalid input. Please enter a valid number.')}")
+            print(f"\n{Red('Invalid input. Please enter a valid number.')}")
 
     # Generate UI for chosen game mode
     if mode == 1:
+        clearScreen()
         secret_number = random.randint(1, 100)
         attempts_left = 5
         print(f"\nYou selected {Yellow('Easy mode')}. Guess a number between {Yellow('1 and 100.')}\n")
     elif mode == 2:
+        clearScreen()
         secret_number = random.randint(1, 1000)
         attempts_left = 7
         print(f"You selected {Yellow('Difficult mode')}. Guess a number between {Yellow('1 and 1000.')}\n")
     else:
+        clearScreen()
         secret_number = random.randint(1, 10000)
         attempts_left = 10
         print(f"You selected {Yellow('Impossible mode')}. Guess a number between {Yellow('1 and 10000.')}\n")
@@ -305,6 +328,7 @@ def guessTheNumber():
             elif guess > secret_number:
                 print("\nToo high! Try again.")
             else:
+                clearScreen()
                 # Display UI if the user wins
                 print(f"\n{Bold(Yellow('Congratulations!'))} You've guessed the number {secret_number}!")
                 try_again_option(guessTheNumber)
@@ -314,6 +338,7 @@ def guessTheNumber():
 
     # Display UI if user loses
     if attempts_left == 0:
+        clearScreen()
         print(f"\n{Red('Game Over!')} You've run out of attempts.")
         print(f"The secret number was {secret_number}.")
         try_again_option(guessTheNumber)
