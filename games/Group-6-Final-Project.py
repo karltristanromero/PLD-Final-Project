@@ -375,5 +375,4 @@ def aboutTheDevs():
     if aboutDevsChoice == "":
         return
     
-if __name__ == "__main__":
-    main()
+main()
